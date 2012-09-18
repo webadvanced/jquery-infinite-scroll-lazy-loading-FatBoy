@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/webadvanced/JavaScript-formatWith-string-extension/master/src/formatWith.js"></script>
+    <script type="text/javascript" src="../src/fatBoy.js"></script>
+    <script type="text/javascript">
+    	var fetchTweets,
+    		appendTweets,
+    		page = 1,
+    		showLoadMore;
+
+    	fetchTweets = function() {
+    		$.getJSON( 'http://search.twitter.com/search.json?q=javascript&result_type=mixed&callback=?&page=' + page, appendTweets );
+    		page++;
+    	};
+
+    	appendTweets = function( response ) {
+    		var tweets = response.results
+    			i = 0,
+    			l = 0,
+    			$tweetList = $( '#tweets' );
+    		if( !tweets || !tweets.length ) return;
+    		l = tweets.length;
+    		for( ; i < l; i++ ) {
+    			$('<li />', {
+    				html: '<img src="{profile_image_url}"" /> <small>{from_user}</small><p>{text}</p>'.formatWith( tweets[i] )
+    			}).appendTo( $tweetList );
+    		}
+    	};
+
+    	showLoadMore = function() {
+    		$('a').show();
+    		$('a').click( fetchTweets );
+    	};
+
+
+    	// bind fatBoy ------------------------------------------------------------------------------
+    	
+    	$(function() {
+    		$( window ).fatBoy( { callback: fetchTweets, limitReached: showLoadMore });
+    		fetchTweets();
+    	});
+    	
+    	//-------------------------------------------------------------------------------------------
+
+    </script>
+    <style>
+    	body {
+    		width: 960px;
+    		margin: 0 auto;
+    	}
+    	ul {
+    		min-height: 800px;
+    	}
+    	li {
+    		min-height: 150px;
+    		list-style: none;
+    	}
+    	a {
+    		display: none;
+    	}
+    </style>
+</head>
+<body>
+	<h1>Tweets for #javascript</h1>
+	<ul id="tweets"></ul>
+	<p><a href="#loadmore">load more</a></p>
+</body>
+</html>
