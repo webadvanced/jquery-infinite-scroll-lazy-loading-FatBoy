@@ -3,17 +3,18 @@
 
 	var defaults = {
 		limit: 3,                   // Number of times to fire event
-		threshold: 100,             // Number of px up from the bottom of the page
+		threshold: 25,              // Number of px up from the bottom of the page
 		triggerEvent: 'nextPage',   // Event that jQuery will trigger when user reaches the bottom of the page
 		uiEvent: 'scroll',          // User event to trigger plugin
-		callback: _undefined        // Callback function to be executed when user reaches the bottom of the page
+		callback: _undefined,       // Callback function to be executed when user reaches the bottom of the page
+		limitReached: _undefined    // Called when limit is reached
 	}, 
 		atBottom,
 		$window = $( w ),
 		$document = $( d );
 	
 	atBottom = function( threshold ) {
-		return ( ( $window.scrollTop() + threshold ) >= $document.height() - $window.height() );
+		return ( ( $window.scrollTop() + threshold ) >= ( $document.height() - $window.height() ) );
 	};
 
 	$.fn.fatBoy = function( options, callback ) {
@@ -30,10 +31,11 @@
 				$container.trigger( options.triggerEvent );
 				//incrament count
 				count++;
-
+				options.threshold += 10;
 				//If the limit has been reach, unbind the scrool event from the container
-				if( options.limit != 0 && count >= options.limit ) {	
+				if( options.limit !== 0 && count >= options.limit ) {	
 					$container.unbind( options.uiEvent );
+					if( options.limitReached ) options.limitReached();
 				}
 			}
 		});
