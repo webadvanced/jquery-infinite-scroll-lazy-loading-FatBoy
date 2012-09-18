@@ -12,7 +12,7 @@ limitReachedEvent: 'limitReached',    // Event that will be triggered when limit
 threshold: 25,                        // Number of px up from the bottom of the page
 triggerEvent: 'nextPage',             // Event that jQuery will trigger when user reaches the bottom of the page
 uiEvent: 'scroll',                    // User event to trigger plugin
-callback: _undefined,                 // Callback function to be executed when user reaches the bottom of the page
+callback: _undefined                 // Callback function to be executed when user reaches the bottom of the page
 ```
 ##using it##
 ```javascript

@@ -8,7 +8,7 @@
 		uiEvent: 'scroll',                    // User event to trigger plugin
 		callback: _undefined,                 // Callback function to be executed when user reaches the bottom of the page
 		limitReached: _undefined,             // Called when limit is reached
-		limitReachedEvent: 'limitReached',    // Called when limit is reached
+		limitReachedEvent: 'limitReached'    // Called when limit is reached
 	}, 
 		atBottom,
 		$window = $( w ),
