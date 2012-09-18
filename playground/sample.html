@@ -39,7 +39,20 @@
     	// bind fatBoy ------------------------------------------------------------------------------
     	
     	$(function() {
-    		$( window ).fatBoy( { callback: fetchTweets, limitReached: showLoadMore });
+    		
+    		//register using arguments
+    		//$( window ).fatBoy({
+    		//	callback: fetchTweets,
+    		//	limitReached: showLoadMore
+    		//});
+    				   
+
+    		//register using raw events
+    		$( window ).fatBoy()
+    				   .bind( 'fatboy:eat', fetchTweets )
+    				   .bind( 'fatboy:alldone', showLoadMore );
+    		
+    		//initial load of tweets
     		fetchTweets();
     	});
     	

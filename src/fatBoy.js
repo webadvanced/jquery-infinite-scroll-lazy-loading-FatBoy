@@ -4,11 +4,11 @@
 	var defaults = {
 		limit: 3,                             // Number of times to fire event
 		threshold: 25,                        // Number of px up from the bottom of the page
-		triggerEvent: 'nextPage',             // Event that jQuery will trigger when user reaches the bottom of the page
+		triggerEvent: 'fatboy:eat',           // Event that jQuery will trigger when user reaches the bottom of the page
 		uiEvent: 'scroll',                    // User event to trigger plugin
 		callback: _undefined,                 // Callback function to be executed when user reaches the bottom of the page
 		limitReached: _undefined,             // Called when limit is reached
-		limitReachedEvent: 'limitReached'    // Called when limit is reached
+		limitReachedEvent: 'fatboy:alldone'   // Called when limit is reached
 	}, 
 		atBottom,
 		$window = $( w ),
@@ -36,7 +36,6 @@
 				//If the limit has been reach, unbind the scrool event from the container
 				if( options.limit !== 0 && count >= options.limit ) {	
 					$container.unbind( options.uiEvent );
-					if( !options.limitReached ) return;
 					$container.trigger( options.limitReachedEvent );
 				}
 			}
@@ -50,6 +49,8 @@
 		if( options.limitReached ) {
 			$container.bind( options.limitReachedEvent, options.limitReached );
 		}
+
+		return this;
 	};
 
 })( window.jQuery, window, document );
