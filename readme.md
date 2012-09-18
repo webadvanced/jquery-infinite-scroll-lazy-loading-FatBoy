@@ -22,3 +22,5 @@ $(function() {
 	}});
 });
 ```
+
+check out the sample for more: https://github.com/webadvanced/Fat-Boy-jQuery-Lazy-Loading/blob/master/playground/sample.html
