@@ -1,12 +1,12 @@
 (function( $, w, d, _undefined ) {
 	if( $ === _undefined ) throw 'jQuery is required. Please make sure you include a reference to jQuery and that this script is included below it.';
 
-	var defaults {
-		limit: 3,
-		threshold: 100, //px
-		triggerEvent: 'nextPage',
-		uiEvent: 'scroll',
-		callback: _undefined
+	var defaults = {
+		limit: 3,                   // Number of times to fire event
+		threshold: 100,             // Number of px up from the bottom of the page
+		triggerEvent: 'nextPage',   // Event that jQuery will trigger when user reaches the bottom of the page
+		uiEvent: 'scroll',          // User event to trigger plugin
+		callback: _undefined        // Callback function to be executed when user reaches the bottom of the page
 	}, 
 		atBottom,
 		$window = $( w ),
@@ -23,23 +23,23 @@
 		var $container = this,
 			count = 0;
 
-		$contaier.bind( options.uiEvent, function() {
+		$container.bind( options.uiEvent, function() {
 			//If the user is at the bottom of the page and the limit has not been reached
 			if( atBottom( options.threshold ) && ( options.limit === 0 || count < options.limit ) ) {
 				//trigger event
-				$contaier.trigger( options.triggerEvent );
+				$container.trigger( options.triggerEvent );
 				//incrament count
 				count++;
 
 				//If the limit has been reach, unbind the scrool event from the container
 				if( options.limit != 0 && count >= options.limit ) {	
-					$contaier.unbind( options.uiEvent );
+					$container.unbind( options.uiEvent );
 				}
 			}
 		});
 		//If a callback is provided, bind it to the triggerEvent
 		if( options.callback ) {
-			$contaier.bind( options.triggerEvent, options.callback );
+			$container.bind( options.triggerEvent, options.callback );
 		}
 	};
 
