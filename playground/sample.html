@@ -44,13 +44,11 @@
     		//$( window ).fatBoy({
     		//	callback: fetchTweets,
     		//	limitReached: showLoadMore
-    		//});
-    				   
+    		//});   
 
     		//register using raw events
-    		$( window ).fatBoy()
-    				   .bind( 'fatboy:eat', fetchTweets )
-    				   .bind( 'fatboy:alldone', showLoadMore );
+    		$( window ).fatBoy().atBottom( fetchTweets )
+                                .atLimit( showLoadMore );
     		
     		//initial load of tweets
     		fetchTweets();

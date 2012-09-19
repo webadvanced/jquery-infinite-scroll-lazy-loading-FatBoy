@@ -21,9 +21,20 @@
 	$.fn.fatBoy = function( options, callback ) {
 		
 		options = $.extend( {}, defaults, options );
-
 		var $container = this,
 			count = 0;
+		$container.options = options;
+		
+		$container.atBottom = function( callback ) {
+			$container.bind( options.triggerEvent, callback );
+			return this;
+		};
+
+		$container.atLimit = function( callback ) {
+			$container.bind( options.limitReachedEvent, callback );
+			return this;
+		};
+		
 
 		$container.bind( options.uiEvent, function() {
 			//If the user is at the bottom of the page and the limit has not been reached
@@ -42,12 +53,12 @@
 		});
 		//If a callback is provided, bind it to the triggerEvent
 		if( options.callback ) {
-			$container.bind( options.triggerEvent, options.callback );
+			$container.atBottom( options.callback );
 		}
 
 		//If limitReached callback is provided
 		if( options.limitReached ) {
-			$container.bind( options.limitReachedEvent, options.limitReached );
+			$container.atLimit( options.limitReached );
 		}
 
 		return this;
