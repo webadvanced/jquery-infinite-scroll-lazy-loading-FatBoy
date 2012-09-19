@@ -52,7 +52,7 @@ var callMeWhenLimitIsReached = function() {
 };
 ```
 
-**Using the argument object and setting the callback property**
+**Using the argument object and setting the callback and limitReached properties**
 
 ```javascript
 $( window ).fatBoy( { callback: callMeWhenUserReachesTheBottomOfPageOne, limitReached: callMeWhenLimitIsReached } );
@@ -60,7 +60,7 @@ $( window ).fatBoy( { callback: callMeWhenUserReachesTheBottomOfPageOne, limitRe
 //this is limited because you can only register a single callback
 ```
 
-**Chaining with the atBottom register function**
+**Chaining with the atBottom and atLimit register functions**
 
 ```javascript
 $( window ).fatBoy()
@@ -82,4 +82,4 @@ $( window ).fatBoy()
 //both functions will fire when the user hits the bottom of the page
 ```
 
-check out the sample for more: https://github.com/webadvanced/Fat-Boy-jQuery-Lazy-Loading/blob/master/playground/sample.html
+check out out Twitter sample: https://github.com/webadvanced/Fat-Boy-jQuery-Lazy-Loading/blob/master/playground/sample.html
