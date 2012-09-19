@@ -35,7 +35,7 @@ limitReachedEvent: 'fatboy:alldone'   // Event that jQuery will trigger when lim
 
 ##Registering callbacks##
 
-Registering callback when the user reaches the bottom of the page can be done 1 of 3 ways:
+Registering callbacks when the user reaches the bottom of the page and when the limit has been reached can be done 1 of 3 ways:
 
 ```javascript
 // The callback functions
