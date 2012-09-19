@@ -37,26 +37,26 @@
 		
 
 		$container.bind( options.uiEvent, function() {
-			//If the user is at the bottom of the page and the limit has not been reached
+			// If the user is at the bottom of the page and the limit has not been reached
 			if( atBottom( options.threshold ) && ( options.limit === 0 || count < options.limit ) ) {
-				//trigger event
+				// trigger event
 				$container.trigger( options.triggerEvent );
-				//incrament count
+				// increment count
 				count++;
 				options.threshold += 10;
-				//If the limit has been reach, unbind the scrool event from the container
+				// If the limit has been reached, unbind the scroll event from the container
 				if( options.limit !== 0 && count >= options.limit ) {	
 					$container.unbind( options.uiEvent );
 					$container.trigger( options.limitReachedEvent );
 				}
 			}
 		});
-		//If a callback is provided, bind it to the triggerEvent
+		// If a callback is provided, bind it to the triggerEvent
 		if( options.callback ) {
 			$container.atBottom( options.callback );
 		}
 
-		//If limitReached callback is provided
+		// If limitReached callback is provided
 		if( options.limitReached ) {
 			$container.atLimit( options.limitReached );
 		}
