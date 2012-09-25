@@ -79,7 +79,7 @@
     // If no callback is supplied, it will fire all callbacks that were bound
     FatBoy.fn.atBottom = function( callback ) {
         if( callback ) {
-            this.$el.bind( this.options.triggerEvent, callback );    
+            this.$el.bind( this.options.triggerEvent, $.proxy( callback, this ) );    
         } else {
             this.eat();
         }
@@ -90,7 +90,7 @@
     // Bind callbacks to fire when the limit has been reached.
     FatBoy.fn.atLimit = function( callback ) {
         if( callback ) {
-            this.$el.bind( this.options.limitReachedEvent, callback );
+            this.$el.bind( this.options.limitReachedEvent, $.proxy( callback, this ) );
         }
         
         return this;
