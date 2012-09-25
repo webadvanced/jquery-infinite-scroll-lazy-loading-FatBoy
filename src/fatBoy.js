@@ -12,8 +12,8 @@
             threshold: 25,                        // Number of px up from the bottom of the page
             triggerEvent: 'fatboy:eat',           // Event that jQuery will trigger when user reaches the bottom of the page
             uiEvent: 'scroll',                    // UI event to trigger plugin
-            callback: undefined,                 // Callback function to be executed when user reaches the bottom of the page
-            limitReached: undefined,             // Callback function to be executed when limit is reached
+            callback: undefined,                  // Callback function to be executed when user reaches the bottom of the page
+            limitReached: undefined,              // Callback function to be executed when limit is reached
             limitReachedEvent: 'fatboy:alldone'   // Event that jQuery will trigger when limit is reached
         }, 
         atBottom,
@@ -22,6 +22,7 @@
         $document = $( d );
     
     atBottom = function( threshold ) {
+        // Check if the user has reached the bottom on the document ( as best we can )
         return ( ( $window.scrollTop() + threshold ) >= ( $document.height() - $window.height() ) );
     };
 
@@ -29,10 +30,12 @@
         
         // If the user is at the bottom of the page and the limit has not been reached
         if( this.canProcess && 
-        	atBottom( this.options.threshold ) && 
-        	( this.options.limit === 0 || this.count < this.options.limit ) ) {
-         
-            // trigger event
+            atBottom( this.options.threshold ) && 
+            ( this.options.limit === 0 || this.count < this.options.limit ) ) {
+            // Lock on prop to keep from other requests from processing
+            this.canProcess = false;
+            
+            // Trigger event
             this.eat();
          
             // increment count
@@ -99,15 +102,19 @@
     };
 
     FatBoy.fn.eat = function() {
-        this.canProcess = false;
         this.$el.trigger( this.options.triggerEvent );
+        
+        // Release the lock so FatBoy and process more requests
         this.canProcess = true;
 
         return this;
     };
 
     FatBoy.fn.diet = function() {
+        // Unbind all the atBottom callback functions from the uiEvent
         this.$el.unbind( this.options.uiEvent );
+
+        // Trigger all atLimit callbacks
         this.$el.trigger( this.options.limitReachedEvent );
     };
 
@@ -120,7 +127,6 @@
             }
 
         });
-
     };
 
     $.fn[pluginGetterName] = function() {

@@ -12,6 +12,7 @@
     		showLoadMore;
 
     	fetchTweets = function() {
+            console.log( page );
     		$.getJSON( 'http://search.twitter.com/search.json?q=javascript&result_type=mixed&callback=?&page=' + page, appendTweets );
     		page++;
     	};
@@ -29,6 +30,15 @@
     			}).appendTo( $tweetList );
     		}
     	};
+
+        // sleepTheApp = function() {
+        //     fb = $(window).fatBoy().myFatBoy();
+        //     for( var i = 0; i < 5000000; i++) {
+        //         if(i%1000 === 0) {
+        //             console.log(fb.canProcess)
+        //         }
+        //     }
+        // };
 
     	showLoadMore = function() {
     		$('a').show();
@@ -53,6 +63,7 @@
     		myFatBoy = $window.fatBoy().myFatBoy();
             myFatBoy
                 .atBottom( fetchTweets )
+                //.atBottom( sleepTheApp )
                 .atLimit( showLoadMore );
     		
     		//initial load of tweets
