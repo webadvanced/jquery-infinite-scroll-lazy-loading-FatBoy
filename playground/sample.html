@@ -47,8 +47,13 @@
     		//});   
 
     		//register using raw events
-    		$( window ).fatBoy().atBottom( fetchTweets )
-                                .atLimit( showLoadMore );
+            var $window = $( window ),
+                myFatBoy;
+
+    		myFatBoy = $window.fatBoy().myFatBoy();
+            myFatBoy
+                .atBottom( fetchTweets )
+                .atLimit( showLoadMore );
     		
     		//initial load of tweets
     		fetchTweets();
