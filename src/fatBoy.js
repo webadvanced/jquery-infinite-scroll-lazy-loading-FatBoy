@@ -1,9 +1,9 @@
 /*global window: false */
 /*global document: false */
 
-;(function( $, w, d, _undefined ) {
+;(function( $, w, d, undefined ) {
     //Ensure jQuery is loaded before the plugin
-    if( $ === _undefined ) throw 'jQuery is required. Please make sure you include a reference to jQuery and that this script is included below it.';
+    if( $ === undefined ) throw 'jQuery is required. Please make sure you include a reference to jQuery and that this script is included below it.';
 
     var pluginName = 'fatBoy',
         pluginGetterName = 'myFatBoy',
@@ -12,8 +12,8 @@
             threshold: 25,                        // Number of px up from the bottom of the page
             triggerEvent: 'fatboy:eat',           // Event that jQuery will trigger when user reaches the bottom of the page
             uiEvent: 'scroll',                    // UI event to trigger plugin
-            callback: _undefined,                 // Callback function to be executed when user reaches the bottom of the page
-            limitReached: _undefined,             // Callback function to be executed when limit is reached
+            callback: undefined,                 // Callback function to be executed when user reaches the bottom of the page
+            limitReached: undefined,             // Callback function to be executed when limit is reached
             limitReachedEvent: 'fatboy:alldone'   // Event that jQuery will trigger when limit is reached
         }, 
         atBottom,
@@ -28,7 +28,9 @@
     onAction = function() {
         
         // If the user is at the bottom of the page and the limit has not been reached
-        if( this.canProcess && atBottom( this.options.threshold ) && ( this.options.limit === 0 || this.count < this.options.limit ) ) {
+        if( this.canProcess && 
+        	atBottom( this.options.threshold ) && 
+        	( this.options.limit === 0 || this.count < this.options.limit ) ) {
          
             // trigger event
             this.eat();
