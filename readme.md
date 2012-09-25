@@ -71,7 +71,8 @@ $( window ).fatBoy()
            .atBottom( callMeWhenUserReachesTheBottomOfPageTwo )
            .atLimit( callMeWhenLimitIsReached );
 
-// This allows for multiple callbacks to be registered when the user hits the bottom of the page and when the atBottom limit has been reached
+// This allows for multiple callbacks to be registered when the 
+// user hits the bottom of the page and when the atBottom limit has been reached
 ```
 
-check out out Twitter sample: https://github.com/webadvanced/Fat-Boy-jQuery-Lazy-Loading/blob/master/playground/sample.html
+check out out Twitter sample: https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/playground/sample.html
