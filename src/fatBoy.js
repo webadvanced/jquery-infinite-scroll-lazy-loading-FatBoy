@@ -14,7 +14,7 @@
             uiEvent: 'scroll',                    // UI event to trigger plugin
             callback: undefined,                  // Callback function to be executed when user reaches the bottom of the page
             limitReached: undefined,              // Callback function to be executed when limit is reached
-            limitReachedEvent: 'fatboy:alldone'   // Event that jQuery will trigger when limit is reached
+            limitReachedEvent: 'fatboy:diet'      // Event that jQuery will trigger when limit is reached
         }, 
         atBottom,
         onAction,
