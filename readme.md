@@ -1,7 +1,7 @@
 #fat boy ~#
 
 ##What and Why##
-fatBoy is a jQuery plugin that will help with infinite scrolling and lazy loading. Using it allows you to bind callbacks functions to fire when the user reaches the bottom of your page.
+fatBoy is a jQuery plugin that will help with infinite scrolling and lazy loading. Using it allows you to bind callbacks functions to fire when the user reaches the bottom of your page and more!
 
 
 ##Using it##
