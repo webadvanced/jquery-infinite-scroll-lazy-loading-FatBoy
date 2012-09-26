@@ -31,7 +31,7 @@
         // If the user is at the bottom of the page and the limit has not been reached
         if( this.canProcess && 
             atBottom( this.options.threshold ) && 
-            ( this.options.limit === 0 || this.count < this.options.limit ) ) {
+            ( this.hasNoLimit  || this.count < this.options.limit ) ) {
             // Lock on prop to keep from other requests from processing
             this.canProcess = false;
             
@@ -56,6 +56,7 @@
         this._name = pluginName;        
         this.count = 0;
         this.canProcess = true;
+        this.hasNoLimit = ( this.options.limit === 0 );
 
         this.init();
 
@@ -121,7 +122,7 @@
     $.fn[pluginName] = function ( options ) {
         
         return this.each( function () {
-            
+            // Only allow a single instance of FatBoy per el
             if ( !$.data( this, 'plugin_' + pluginName ) ) {
                 $.data( this, 'plugin_' + pluginName, new FatBoy( this, options ) );
             }
