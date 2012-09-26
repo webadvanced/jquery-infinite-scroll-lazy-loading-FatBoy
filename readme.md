@@ -27,11 +27,13 @@ $(function() {
 ##Options and defaults##
 
 ```javascript
-limit: 3,                             // Number of times to fire event (0 === unlimited)
-threshold: 25,                        // Number of px up from the bottom of the page
-uiEvent: 'scroll',                    // UI event to trigger plugin
-callback: undefined,                  // Callback function to be executed when user reaches the bottom of the page
-limitReached: undefined               // Callback function to be executed when limit is reached
+limit: 3,                                   // Number of times to fire event (0 === unlimited)
+threshold: 25,                              // Number of px up from the bottom of the page
+uiEvent: 'scroll',                          // UI event to trigger plugin
+atBottom: undefined,                        // Callback function to be executed when user reaches the bottom of the page
+atLimit: undefined,                         // Callback function to be executed when limit is reached
+ajaxOptions: undefined,                     // jQuery Ajax options
+beforeAjax: undefined                       // Gets called before the Ajax call is make, is passed the current ajaxOptions as argument
 ```
 
 ##Registering callbacks##

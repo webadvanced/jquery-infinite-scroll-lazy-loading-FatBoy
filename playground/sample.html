@@ -11,13 +11,13 @@
     		page = 1,
     		showLoadMore;
 
-    	fetchTweets = function() {
-            console.log( page );
-    		$.getJSON( 'http://search.twitter.com/search.json?q=javascript&result_type=mixed&callback=?&page=' + page, appendTweets );
+    	fetchTweets = function( options ) {
+            options.url = 'http://search.twitter.com/search.json?q=javascript&result_type=mixed&callback=?&page=' + page;
     		page++;
     	};
 
-    	appendTweets = function( response ) {
+    	appendTweets = function( e, response ) {
+            console.log( arguments );
     		var tweets = response.results
     			i = 0,
     			l = 0,
@@ -31,43 +31,44 @@
     		}
     	};
 
-        // sleepTheApp = function() {
-        //     fb = $(window).fatBoy().myFatBoy();
-        //     for( var i = 0; i < 5000000; i++) {
-        //         if(i%1000 === 0) {
-        //             console.log(fb.canProcess)
-        //         }
-        //     }
-        // };
-
     	showLoadMore = function() {
     		$('a').show();
-    		$('a').click( fetchTweets );
     	};
 
 
     	// bind fatBoy ------------------------------------------------------------------------------
     	
     	$(function() {
+    		var $window = $( window ),
+                $a = $( 'a' ),
+                fatBoy;
     		
-    		//register using arguments
-    		//$( window ).fatBoy({
-    		//	callback: fetchTweets,
-    		//	limitReached: showLoadMore
-    		//});   
+            //register using arguments
+    		// $window.fatBoy({
+    		// 	atBottom: appendTweets,
+    		// 	limitReached: showLoadMore,
+      //           ajaxOptions: {
+      //               dataType: 'json'
+      //           },
+      //           beforeAjax: fetchTweets
+    		// });
 
-    		//register using raw events
-            var $window = $( window ),
-                myFatBoy;
+      //       fatBoy = $window.myFatBoy();
+      //       $a.click( fatBoy.loadMore );
 
-    		myFatBoy = $window.fatBoy().myFatBoy();
-            myFatBoy
-                .atBottom( fetchTweets )
-                //.atBottom( sleepTheApp )
-                .atLimit( showLoadMore );
+      //       fatBoy.loadMore();
+
+    		//register using fatBoy
+            fatBoy = $window.fatBoy().myFatBoy();
+            fatBoy
+                .atBottom( appendTweets )
+                .atLimit( showLoadMore )
+                .setAjaxOptions( { dataType: 'json' }, fetchTweets ); //ajaxOptions, beforeAjaxCallback
+
+            $a.click( fatBoy.loadMore );
+
+            fatBoy.loadMore();
     		
-    		//initial load of tweets
-    		fetchTweets();
     	});
     	
     	//-------------------------------------------------------------------------------------------
