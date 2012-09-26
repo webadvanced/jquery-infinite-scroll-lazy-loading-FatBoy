@@ -1,3 +1,4 @@
+/*! fatBoy v0.5.0 https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/LICENSE */
 /*global window: false */
 /*global document: false */
 
