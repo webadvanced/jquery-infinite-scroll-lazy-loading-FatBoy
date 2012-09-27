@@ -20,8 +20,8 @@
             limitReachedEvent: 'fatboy:diet',           // Event that jQuery will trigger when limit is reached
             toggleProcessingEvent: 'fatboy:eating',     // Event that jQuery will trigger when processing starts and stops
             ajaxOptions: undefined,                     // jQuery Ajax options
-            beforeAjax: undefined,                      // Gets called before the Ajax call is make, is passed the current ajaxOptions as argument
-            returnFatboy: false                         // If true, $( el ).fatBoy() will return an instance if FatBoy not jQuery
+            beforeAjax: undefined,                      // Gets called before the Ajax call is made, passes the current ajaxOptions as argument
+            returnFatboy: false                         // If true, $( el ).fatBoy() will return an instance of FatBoy not jQuery
         }, 
         atBottom,
         onAction,

@@ -7,18 +7,19 @@ fatBoy is a jQuery plugin that will help with infinite scrolling and lazy loadin
 ##Using it##
 ```javascript
 $(function() {
+	// Call fatBoy on window and passe in the options as an object
 	$( window ).fatBoy({ callback: function() {
 		alert( 'bottom of page!' );
 	}});
 
 	// or
 
-	// Get a reference to the FatBoy reference using the myFatBoy extension method and then call the atBottom function
-	var fatBoy = $( window ).fatBoy().myFatBoy();
-
-	fatBoy.atBottom( function() {
-		alert( 'bottom of page!' );
-	});
+	// By passing true an instance of FatBoy is returned in place if jQuery
+	// We can now chain methods like atBottom and atLimit
+	$( window ).fatBoy( true )
+		.atBottom( function() {
+			alert( 'bottom of page!' );
+		});
 
 });
 ```
@@ -33,13 +34,13 @@ uiEvent: 'scroll'          // UI event to trigger plugin
 atBottom: undefined        // Callback function to be executed when user reaches the bottom of the page
 atLimit: undefined         // Callback function to be executed when limit is reached
 ajaxOptions: undefined     // jQuery Ajax options
-beforeAjax: undefined      // Gets called before the Ajax call is make, is passed the current ajaxOptions as argument
-returnFatboy: false        // If true, $( el ).fatBoy() will return an instance if FatBoy not jQuery
+beforeAjax: undefined      // Gets called before the Ajax call is made, passes the current ajaxOptions as argument
+returnFatboy: false        // If true, $( el ).fatBoy() will return an instance of FatBoy not jQuery
 ```
 
 ##Registering callbacks##
 
-Registering callbacks when the user reaches the bottom of the page and when the limit has been reached can be done 1 of 3 ways:
+Registering callbacks can be done a couple of ways:
 
 ```javascript
 // The callback functions
@@ -56,26 +57,27 @@ var callMeWhenLimitIsReached = function() {
 };
 ```
 
-**Using the argument object and setting the callback and limitReached properties**
+**Passing an options object as the argument to fatBoy**
 
 ```javascript
-$( window ).fatBoy( { callback: callMeWhenUserReachesTheBottomOfPageOne, limitReached: callMeWhenLimitIsReached } );
+$( window ).fatBoy( { atBottom: callMeWhenUserReachesTheBottomOfPageOne, atLimit: callMeWhenLimitIsReached } );
 
-//this is limited because you can only register a single callback
+//this is limited because you can only register a single callback for each
 ```
 
-**Chaining with the atBottom and atLimit register functions**
+**Chaining callback functions**
 
 ```javascript
-// Get a reference to the FatBoy reference by passing true or setting the { returnFatBoy: true } in options
-// Then we can call the atBottom and atLimit functions on the returned FatBoy instance to register callbacks
+// Get a reference to the instance of FatBoy by passing true or setting the { returnFatBoy: true } in options
+// Now you can call the atBottom and atLimit functions on the returned FatBoy instance to register callbacks
 $( window ).fatBoy( true )
            .atBottom( callMeWhenUserReachesTheBottomOfPageOne )
            .atBottom( callMeWhenUserReachesTheBottomOfPageTwo )
            .atLimit( callMeWhenLimitIsReached );
 
-// This allows for multiple callbacks to be registered when the 
-// user hits the bottom of the page and when the atBottom limit has been reached
+// This allows for multiple callbacks to be registered
 ```
 
-check out out Twitter sample: https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/playground/sample.html
+**Twitter sample** 
+
+https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/playground/sample.html
