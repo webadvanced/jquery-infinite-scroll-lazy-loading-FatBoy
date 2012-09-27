@@ -207,4 +207,7 @@
         return fatBoy;
     };
 
+    // Expose the defaults
+    $.fatBoy.defaults = defaults;
+
 })( window.jQuery, window, document );
