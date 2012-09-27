@@ -66,8 +66,7 @@
       //       fatBoy.loadMore();
 
     		//register using fatBoy
-            fatBoy = $window.fatBoy().myFatBoy();
-            fatBoy
+            var fatBoy = $window.fatBoy( true )
                 .atBottom( appendTweets )
                 .atBottom( toggleProcessing )
                 .atLimit( showLoadMore )

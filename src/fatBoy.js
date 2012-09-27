@@ -7,7 +7,9 @@
     if( $ === undefined ) throw 'jQuery is required. Please make sure you include a reference to jQuery and that this script is included below it.';
 
     var pluginName = 'fatBoy',
-        pluginGetterName = 'myFatBoy',
+        pluginGetterName = 'getFatboy',
+        initFatBoy,
+        initJQuery,
         defaults = {
             limit: 3,                                   // Number of times to fire event (0 === unlimited)
             threshold: 25,                              // Number of px up from the bottom of the page
@@ -18,7 +20,8 @@
             limitReachedEvent: 'fatboy:diet',           // Event that jQuery will trigger when limit is reached
             toggleProcessingEvent: 'fatboy:eating',     // Event that jQuery will trigger when processing starts and stops
             ajaxOptions: undefined,                     // jQuery Ajax options
-            beforeAjax: undefined                       // Gets called before the Ajax call is make, is passed the current ajaxOptions as argument
+            beforeAjax: undefined,                      // Gets called before the Ajax call is make, is passed the current ajaxOptions as argument
+            returnFatboy: false                         // If true, $( el ).fatBoy() will return an instance if FatBoy not jQuery
         }, 
         atBottom,
         onAction,
@@ -172,19 +175,36 @@
         return this;
     };
 
-    $.fn[pluginName] = function ( options ) {
-        
-        return this.each( function () {
-            // Only allow a single instance of FatBoy per el
-            if ( !$.data( this, 'plugin_' + pluginName ) ) {
-                $.data( this, 'plugin_' + pluginName, new FatBoy( this, options ) );
-            }
-
-        });
-    };
-
+    // Allows users to get the instance of FatBoy for an el $( el ).getFatBoy()
     $.fn[pluginGetterName] = function() {
         return this.data( 'plugin_' + pluginName );
+    };
+
+    $.fn[pluginName] = function ( options, init ) {
+        
+        init = init || ( options === true || ( options && options.returnFatBoy ) ) ? initFatBoy : initJQuery;
+
+        if( this.length > 1 ) {
+            this.each(function() {
+                $( this ).fatBoy( options, init );
+            });
+        }
+
+        return init( options );
+    };
+
+    initJQuery = function( options, fatBoy ) {
+        fatBoy = fatBoy || new FatBoy( this, options );
+        if ( !$.data( this, 'plugin_' + pluginName ) ) {
+            $.data( this, 'plugin_' + pluginName, fatBoy );
+        }
+        return $( this );
+    };
+
+    initFatBoy = function( options ) {
+        var fatBoy = new FatBoy( this, options );
+        initJQuery( this, fatBoy );
+        return fatBoy;
     };
 
 })( window.jQuery, window, document );

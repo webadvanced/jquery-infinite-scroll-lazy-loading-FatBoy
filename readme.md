@@ -66,9 +66,9 @@ $( window ).fatBoy( { callback: callMeWhenUserReachesTheBottomOfPageOne, limitRe
 **Chaining with the atBottom and atLimit register functions**
 
 ```javascript
-// Get a reference to the FatBoy reference using the myFatBoy extension method and then call the atBottom function
-$( window ).fatBoy()
-           .myFatBoy() //Gets the instance of the FatBoy Object
+// Get a reference to the FatBoy reference by passing true or setting the { returnFatBoy: true } in options
+// Then we can call the atBottom and atLimit functions on the returned FatBoy instance to register callbacks
+$( window ).fatBoy( true )
            .atBottom( callMeWhenUserReachesTheBottomOfPageOne )
            .atBottom( callMeWhenUserReachesTheBottomOfPageTwo )
            .atLimit( callMeWhenLimitIsReached );
