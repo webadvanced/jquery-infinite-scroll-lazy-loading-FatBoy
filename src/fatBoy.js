@@ -63,8 +63,7 @@
 
         // If there are Ajax options, send Ajax request and then trigger eat
         if( this.options.ajaxOptions ) {
-            this.options.ajaxOptions.success = $.proxy( this.eat, this );
-            this.takeAction = this.bake;
+            this.setAjaxOptions( this.options.ajaxOptions, this.options.beforeAjax );
         } else {
             this.takeAction = this.eat;
         }
@@ -77,6 +76,7 @@
     FatBoy.fn = FatBoy.prototype;
     FatBoy.defaults = defaults;
     FatBoy.fn.init = function() {
+        var self = this;
         this.$el
             .bind( this.options.uiEvent, $.proxy( onAction , this ) ) // Bind the given uiEvent to the onAction function
             .bind( this.options.toggleProcessingEvent, $.proxy( this.eating, this ) ); // Bind the el to the toggle processing event
@@ -90,6 +90,14 @@
         if( this.options.atLimit ) {
             this.atLimit( this.options.atLimit );
         }
+
+        //set up a load more function that will keep the scope of the FatBoy instance
+        this.loadMore = function() {
+            // Because user is manually calling, toggle processing
+            self.$el.trigger( self.options.toggleProcessingEvent );
+            self.takeAction();
+            return self;
+        };
     };
 
     // Bind callbacks that will fire when the user reaches the bottom of the page
@@ -111,13 +119,6 @@
         }
         
         return this;
-    };
-
-    FatBoy.fn.loadMore = function() {
-        // Because user is manually calling, toggle processing
-        this.$el.trigger( this.options.toggleProcessingEvent );
-
-        this.takeAction();
     };
 
     FatBoy.fn.eat = function( response ) {

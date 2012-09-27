@@ -9,9 +9,11 @@
     	var fetchTweets,
     		appendTweets,
     		page = 1,
-    		showLoadMore;
+    		showLoadMore,
+            toggleProcessing;
 
     	fetchTweets = function( options ) {
+            toggleProcessing();
             options.url = 'http://search.twitter.com/search.json?q=javascript&result_type=mixed&callback=?&page=' + page;
     		page++;
     	};
@@ -34,6 +36,11 @@
     	showLoadMore = function() {
     		$('a').show();
     	};
+
+        toggleProcessing = function() {
+            $( 'div.processing' ).toggle();
+            $( 'p.loadmore' ).toggle();
+        };
 
 
     	// bind fatBoy ------------------------------------------------------------------------------
@@ -62,6 +69,7 @@
             fatBoy = $window.fatBoy().myFatBoy();
             fatBoy
                 .atBottom( appendTweets )
+                .atBottom( toggleProcessing )
                 .atLimit( showLoadMore )
                 .setAjaxOptions( { dataType: 'json' }, fetchTweets ); //ajaxOptions, beforeAjaxCallback
 
@@ -89,11 +97,17 @@
     	a {
     		display: none;
     	}
+        div.processing {
+            text-align: center;
+            width: 100%;
+            display: none;
+        }
     </style>
 </head>
 <body>
 	<h1>Tweets for #javascript</h1>
 	<ul id="tweets"></ul>
-	<p><a href="#loadmore">load more</a></p>
+    <div class="processing"><img src="processing.gif" alt="processing" /></div>
+	<p class="loadMore"><a href="#loadmore">load more</a></p>
 </body>
 </html>
