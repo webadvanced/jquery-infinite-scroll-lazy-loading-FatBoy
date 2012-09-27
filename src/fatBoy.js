@@ -31,72 +31,74 @@
     };
 
     onAction = function() {
+        var _fatBoy = this;
         // If the user is at the bottom of the page and the limit has not been reached
-        if( this.canProcess && 
-            atBottom( this.options.threshold ) && 
-            ( this.hasNoLimit  || this.count <= this.options.limit ) ) {
+        if( _fatBoy.canProcess && 
+            atBottom( _fatBoy.options.threshold ) && 
+            ( _fatBoy.hasNoLimit  || _fatBoy.count <= _fatBoy.options.limit ) ) {
             // Lock on prop to keep from other requests from processing
-            this.$el.trigger( this.options.toggleProcessingEvent );
+            _fatBoy.$el.trigger( _fatBoy.options.toggleProcessingEvent );
             
             // Trigger event
-            this.takeAction();
+            _fatBoy.takeAction();
                      
             // increment count
-            this.count++;
-            this.options.threshold += 10;
+            _fatBoy.count++;
+            _fatBoy.options.threshold += 10;
          
             // If the limit has been reached, unbind the scroll event from the container
-            if( this.options.limit !== 0 && this.count >= this.options.limit ) {    
-                this.diet();
+            if( _fatBoy.options.limit !== 0 && _fatBoy.count >= _fatBoy.options.limit ) {    
+                _fatBoy.diet();
             }
         }
     };
 
     function FatBoy( el, options ) {
-        this.el = el;
-        this.$el = $( el );
-        this.options = ( options ) ? $.extend( {}, defaults, options ) : defaults;
-        this._name = pluginName;        
-        this.count = 0;
-        this.canProcess = true;
-        this.hasNoLimit = ( this.options.limit === 0 );
+        var _fatBoy = this;
+        _fatBoy.el = el;
+        _fatBoy.$el = $( el );
+        _fatBoy.options = ( options ) ? $.extend( {}, defaults, options ) : defaults;
+        _fatBoy._name = pluginName;        
+        _fatBoy.count = 0;
+        _fatBoy.canProcess = true;
+        _fatBoy.hasNoLimit = ( _fatBoy.options.limit === 0 );
 
         // If there are Ajax options, send Ajax request and then trigger eat
-        if( this.options.ajaxOptions ) {
-            this.setAjaxOptions( this.options.ajaxOptions, this.options.beforeAjax );
+        if( _fatBoy.options.ajaxOptions ) {
+            _fatBoy.setAjaxOptions( _fatBoy.options.ajaxOptions, _fatBoy.options.beforeAjax );
         } else {
-            this.takeAction = this.eat;
+            _fatBoy.takeAction = _fatBoy.eat;
         }
         
-        this.init();
+        _fatBoy.init();
 
-        return this;
+        return _fatBoy;
     }
 
     FatBoy.fn = FatBoy.prototype;
     FatBoy.defaults = defaults;
     FatBoy.fn.init = function() {
-        var self = this;
-        this.$el
-            .bind( this.options.uiEvent, $.proxy( onAction , this ) ) // Bind the given uiEvent to the onAction function
-            .bind( this.options.toggleProcessingEvent, $.proxy( this.eating, this ) ); // Bind the el to the toggle processing event
+        var _fatBoy = this;
+        _fatBoy.$el
+            .bind( _fatBoy.options.uiEvent, $.proxy( onAction , _fatBoy ) ) // Bind the given uiEvent to the onAction function
+            .bind( _fatBoy.options.toggleProcessingEvent, $.proxy( _fatBoy.eating, _fatBoy ) ); // Bind the el to the toggle processing event
 
         // If a callback is provided, bind it to the triggerEvent
-        if( this.options.atBottom ) {
-            this.atBottom( this.options.atBottom );
+        if( _fatBoy.options.atBottom ) {
+            _fatBoy.atBottom( _fatBoy.options.atBottom );
         }
 
         // If limitReached callback is provided
-        if( this.options.atLimit ) {
-            this.atLimit( this.options.atLimit );
+        if( _fatBoy.options.atLimit ) {
+            _fatBoy.atLimit( _fatBoy.options.atLimit );
         }
 
         //set up a load more function that will keep the scope of the FatBoy instance
-        this.loadMore = function() {
+        _fatBoy.loadMore = function() {
             // Because user is manually calling, toggle processing
-            self.$el.trigger( self.options.toggleProcessingEvent );
-            self.takeAction();
-            return self;
+            _fatBoy.$el.trigger( _fatBoy.options.toggleProcessingEvent );
+            _fatBoy.takeAction();
+            return _fatBoy;
         };
     };
 
@@ -141,16 +143,17 @@
     };
 
     FatBoy.fn.setAjaxOptions = function( ajaxOptions, beforeAjaxCallback ) {
+        var _fatBoy = this;
         if( !ajaxOptions ) throw 'ajaxOptions are required';
 
-        ajaxOptions.success = $.proxy( this.eat, this );
-        this.options.ajaxOptions = ajaxOptions;
+        ajaxOptions.success = $.proxy( _fatBoy.eat, _fatBoy );
+        _fatBoy.options.ajaxOptions = ajaxOptions;
         
-        if( beforeAjaxCallback ) this.options.beforeAjax = beforeAjaxCallback;
+        if( beforeAjaxCallback ) _fatBoy.options.beforeAjax = beforeAjaxCallback;
 
-        this.takeAction = this.bake;
+        _fatBoy.takeAction = _fatBoy.bake;
 
-        return this;
+        return _fatBoy;
     };
 
     FatBoy.fn.eating = function() {
