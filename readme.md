@@ -78,6 +78,22 @@ $( window ).fatBoy( true )
 // This allows for multiple callbacks to be registered
 ```
 
+
+##Setting default options##
+
+You can use the `$.fatBoy.options` hash to set default options that will be applied to every call to fatBoy()
+
+```javascript
+$.fatBoy.options = {
+	limit: 5, // auto load only 5x
+	threshold: 250 //account for footer,
+	returnFatBoy: true
+};
+```
+
+Now, calling `$( el ).fatBoy()` will use those defaults. If you pass arguments to the fatBoy call, they will take priority.
+
+
 **Twitter sample** 
 
 https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/playground/sample.html
