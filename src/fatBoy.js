@@ -10,6 +10,7 @@
         pluginGetterName = 'getFatboy',
         initFatBoy,
         initJQuery,
+        checkData,
         defaults = {
             limit: 3,                                   // Number of times to fire event (0 === unlimited)
             threshold: 25,                              // Number of px up from the bottom of the page
@@ -176,11 +177,11 @@
     };
 
     // Allows users to get the instance of FatBoy for an el $( el ).getFatBoy()
-    $.fn[pluginGetterName] = function() {
+    $.fn[ pluginGetterName ] = function() {
         return this.data( 'plugin_' + pluginName );
     };
 
-    $.fn[pluginName] = function ( options, init ) {
+    $.fn[ pluginName ] = function ( options, init ) {
         
         init = init || ( options === true || ( options && options.returnFatBoy ) || $.fatBoy.options.returnFatboy === true ) ? initFatBoy : initJQuery;
 
@@ -195,16 +196,25 @@
 
     initJQuery = function( options, fatBoy ) {
         fatBoy = fatBoy || new FatBoy( this, options );
-        if ( !$.data( this, 'plugin_' + pluginName ) ) {
+        if ( !checkData( this ) ) {
             $.data( this, 'plugin_' + pluginName, fatBoy );
         }
         return $( this );
     };
 
     initFatBoy = function( options ) {
+        // If already created, just return the existing instance of FatBoy
+        if( checkData( this ) ) {
+            return $( this )[ pluginGetterName ]();
+        }
+
         var fatBoy = new FatBoy( this, options );
         initJQuery( this, fatBoy );
         return fatBoy;
+    };
+
+    checkData = function( el ) {
+        return $.data( el, 'plugin_' + pluginName );
     };
 
     // Default options for the user to set
