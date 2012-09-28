@@ -60,7 +60,7 @@
         var _fatBoy = this;
         _fatBoy.el = el;
         _fatBoy.$el = $( el );
-        _fatBoy.options = ( options ) ? $.extend( {}, defaults, options ) : defaults;
+        _fatBoy.options = $.extend( {}, defaults, $.fatBoy.options, ( options || { } ) );
         _fatBoy._name = pluginName;        
         _fatBoy.count = 0;
         _fatBoy.canProcess = true;
@@ -182,7 +182,7 @@
 
     $.fn[pluginName] = function ( options, init ) {
         
-        init = init || ( options === true || ( options && options.returnFatBoy ) ) ? initFatBoy : initJQuery;
+        init = init || ( options === true || ( options && options.returnFatBoy ) || $.fatBoy.options.returnFatboy === true ) ? initFatBoy : initJQuery;
 
         if( this.length > 1 ) {
             this.each(function() {
@@ -207,7 +207,9 @@
         return fatBoy;
     };
 
-    // Expose the defaults
-    $.fatBoy.defaults = defaults;
+    // Default options for the user to set
+    $.fatBoy = {
+        options: { }
+    };
 
 })( window.jQuery, window, document );

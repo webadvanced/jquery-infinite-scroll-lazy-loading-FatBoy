@@ -45,7 +45,7 @@
 
     	// bind fatBoy ------------------------------------------------------------------------------
     	
-    	$(function() {
+    	$(function() { 
     		var $window = $( window ),
                 $a = $( 'a' ),
                 fatBoy;
@@ -65,8 +65,13 @@
 
       //       fatBoy.loadMore();
 
-    		//register using fatBoy
-            var fatBoy = $window.fatBoy( true )
+            // set global defaults
+            $.fatBoy.options = {
+                returnFatboy: true
+            };
+            
+            //register using fatBoy
+            var fatBoy = $window.fatBoy()
                 .atBottom( appendTweets )
                 .atBottom( toggleProcessing )
                 .atLimit( showLoadMore )
