@@ -94,6 +94,6 @@ $.fatBoy.options = {
 Now, calling `$( el ).fatBoy()` will use the defined global options. If you pass an options object as an argument to the fatBoy call, they will take priority.
 
 
-#Twitter sample# 
+##Twitter sample##
 
 https://github.com/webadvanced/jquery-infinite-scroll-lazy-loading-FatBoy/blob/master/playground/sample.html
