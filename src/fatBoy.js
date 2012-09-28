@@ -195,11 +195,16 @@
     };
 
     initJQuery = function( options, fatBoy ) {
-        fatBoy = fatBoy || new FatBoy( this, options );
-        if ( !checkData( this ) ) {
-            $.data( this, 'plugin_' + pluginName, fatBoy );
+        var $this = $( this );
+        //return this if FatBoy as already been created for el
+        if( checkData( this ) ) {
+            return $this;
         }
-        return $( this );
+
+        fatBoy = fatBoy || new FatBoy( this, options );
+        $.data( this, 'plugin_' + pluginName, fatBoy );
+
+        return $this;
     };
 
     initFatBoy = function( options ) {
