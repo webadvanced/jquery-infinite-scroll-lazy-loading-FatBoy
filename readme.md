@@ -91,7 +91,7 @@ $.fatBoy.options = {
 };
 ```
 
-Now, calling `$( el ).fatBoy()` will use those defaults. If you pass arguments to the fatBoy call, they will take priority.
+Now, calling `$( el ).fatBoy()` will use the defined global options. If you pass an options object as an argument to the fatBoy call, they will take priority.
 
 
 #Twitter sample# 
